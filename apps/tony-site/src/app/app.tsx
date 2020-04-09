@@ -6,11 +6,14 @@ import { ReactComponent as Logo } from './logo.svg';
 
 import { Route, Link } from 'react-router-dom';
 import { PageTitle } from '@monotony/ui-header';
+import { ApiResponse, API_URL } from '@monotony/api-interface';
 
 export const App = () => {
-  const [apiResponse, setApiResponse] = useState({ message: 'Loading...' });
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({
+    message: 'Loading...'
+  });
   useEffect(() => {
-    fetch('/api')
+    fetch(API_URL)
       .then(res => res.json())
       .then(setApiResponse);
   }, []);

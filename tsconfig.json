@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@monotony/ui-header": ["libs/ui-header/src/index.ts"]
+      "@monotony/ui-header": ["libs/ui-header/src/index.ts"],
+      "@monotony/api-interface": ["libs/api-interface/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
