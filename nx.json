@@ -18,5 +18,16 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "tony-site": {
+      "tags": []
+    },
+    "tony-site-e2e": {
+      "tags": [],
+      "implicitDependencies": ["tony-site"]
+    },
+    "ui-header": {
+      "tags": []
+    }
+  }
 }

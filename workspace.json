@@ -1,8 +1,146 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "tony-site": {
+      "root": "apps/tony-site",
+      "sourceRoot": "apps/tony-site/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/tony-site",
+            "index": "apps/tony-site/src/index.html",
+            "main": "apps/tony-site/src/main.tsx",
+            "polyfills": "apps/tony-site/src/polyfills.ts",
+            "tsConfig": "apps/tony-site/tsconfig.app.json",
+            "assets": [
+              "apps/tony-site/src/favicon.ico",
+              "apps/tony-site/src/assets"
+            ],
+            "styles": ["apps/tony-site/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/tony-site/src/environments/environment.ts",
+                  "with": "apps/tony-site/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "tony-site:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "tony-site:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/tony-site/.eslintrc",
+            "tsConfig": [
+              "apps/tony-site/tsconfig.app.json",
+              "apps/tony-site/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/tony-site/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/tony-site/jest.config.js",
+            "tsConfig": "apps/tony-site/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "tony-site-e2e": {
+      "root": "apps/tony-site-e2e",
+      "sourceRoot": "apps/tony-site-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tony-site-e2e/cypress.json",
+            "tsConfig": "apps/tony-site-e2e/tsconfig.e2e.json",
+            "devServerTarget": "tony-site:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tony-site:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/tony-site-e2e/.eslintrc",
+            "tsConfig": ["apps/tony-site-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/tony-site-e2e/**"]
+          }
+        }
+      }
+    },
+    "ui-header": {
+      "root": "libs/ui-header",
+      "sourceRoot": "libs/ui-header/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/ui-header/.eslintrc",
+            "tsConfig": [
+              "libs/ui-header/tsconfig.lib.json",
+              "libs/ui-header/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui-header/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-header/jest.config.js",
+            "tsConfig": "libs/ui-header/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/react"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -17,9 +155,15 @@
     },
     "@nrwl/react": {
       "application": {
-        "linter": "eslint"
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
       },
       "library": {
+        "style": "css",
         "linter": "eslint"
       }
     },
@@ -59,5 +203,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "tony-site"
 }

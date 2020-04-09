@@ -1,0 +1,4 @@
+```
+# Crear espacio de trabajo:
+$ npx create-nx-workspace monotony
+```
